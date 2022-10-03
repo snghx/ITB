@@ -1,0 +1,17 @@
+import pandas as pd
+
+fpath = 'https://raw.githubusercontent.com/ykjoy/mining/main/chipotle.csv'
+chipo = pd.read_csv(fpath)
+
+# 가격 데이터 형식 변경
+chipo['item_price'] = chipo['item_price'].apply(lambda x: float(x[1:]))
+
+
+# 연습문제1
+#(1) 가장 잘 팔리지 않은 메뉴 10개
+least = chipo['item_name'].value_counts()
+print(least[-10:])
+
+#(2) 가격이 가장 저렴한 메뉴 5개
+cheapest = chipo.groupby('item_name')['item_price'].min() 
+print(cheapest.sort_values(ascending = False)[-5:])
